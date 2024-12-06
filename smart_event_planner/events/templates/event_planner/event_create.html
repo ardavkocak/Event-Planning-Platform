@@ -1,0 +1,115 @@
+{% extends 'event_planner/base.html' %}
+
+{% block content %}
+<h2>Etkinlik Oluştur</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <label for="name">Etkinlik Adı:</label>
+    <input type="text" name="name" id="name" required>
+
+    <label for="description">Açıklama:</label>
+    <textarea name="description" id="description" required></textarea>
+
+    <label for="event_date">Tarih:</label>
+    <input type="date" name="event_date" id="event_date" required>
+
+    <label for="event_time">Saat:</label>
+    <input type="time" name="event_time" id="event_time" required>
+
+    
+    <label for="location">Yer Seçimi:</label>
+    <div id="map" style="height: 400px;"></div>
+    <input type="text" name="location" id="location" required readonly>
+
+    <label for="category">Kategori:</label>
+    <select name="category" id="category" required>
+        <option value="">Bir kategori seçin</option>
+        <option value="Sosyal">Sosyal</option>
+        <option value="Konferans">Konferans</option>
+        <option value="Workshop">Workshop</option>
+        <option value="Online">Online</option>
+    </select>
+
+    <div id="category-info">
+        
+    </div>
+
+    <label for="sub_category">Alt Kategori:</label>
+    <select name="sub_category" id="sub_category" disabled required>
+        <option value="">Bir alt kategori seçin</option>
+    </select>
+
+    <label for="duration">Süre (saat):</label>
+    <input type="number" name="duration" id="duration" min="0">
+
+    <label for="photo">Etkinlik Resmi:</label>
+    <input type="file" name="photo" id="photo">
+
+    <button type="submit">Etkinliği Oluştur</button>
+</form>
+
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+<script>
+    
+    var map = L.map('map').setView([41.0082, 28.9784], 10); 
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+    }).addTo(map);
+
+    var marker = L.marker([41.0082, 28.9784]).addTo(map);
+
+    map.on('click', function(e) {
+        var lat = e.latlng.lat;
+        var lng = e.latlng.lng;
+        marker.setLatLng([lat, lng]);
+        document.getElementById('location').value = lat + ', ' + lng;
+    });
+
+    
+    document.getElementById('category').addEventListener('change', function() {
+        var category = this.value;
+        var categoryInfo = document.getElementById('category-info');
+        var subCategorySelect = document.getElementById('sub_category');
+        
+        
+        subCategorySelect.innerHTML = '<option value="">Bir alt kategori seçin</option>';
+        subCategorySelect.disabled = true;
+
+        
+        if (category === 'Sosyal') {
+            categoryInfo.innerHTML = '<h4>Sosyal Etkinlikler Alt Başlıkları</h4><ul><li>Müzik</li><li>Spor</li><li>Diğer Sosyal Etkinlikler</li></ul>';
+            addSubCategories(['Müzik', 'Spor', 'Diğer Sosyal Etkinlikler']);
+        } else if (category === 'Konferans') {
+            categoryInfo.innerHTML = '<h4>Konferans Etkinlikleri Alt Başlıkları</h4><ul><li>Teknoloji Konferansı</li><li>İş Dünyası Konferansı</li></ul>';
+            addSubCategories(['Teknoloji Konferansı', 'İş Dünyası Konferansı']);
+        } else if (category === 'Workshop') {
+            categoryInfo.innerHTML = '<h4>Workshop Etkinlikleri Alt Başlıkları</h4><ul><li>Yazılım Workshopları</li><li>Sanat Workshopları</li></ul>';
+            addSubCategories(['Yazılım Workshopları', 'Sanat Workshopları']);
+        } else if (category === 'Online') {
+            categoryInfo.innerHTML = '<h4>Online Etkinlikler Alt Başlıkları</h4><ul><li>Online Seminerler</li><li>Webinar</li></ul>';
+            addSubCategories(['Online Seminerler', 'Webinar']);
+        } else {
+            categoryInfo.innerHTML = '';
+        }
+    });
+
+    
+    function addSubCategories(subCategories) {
+        var subCategorySelect = document.getElementById('sub_category');
+        subCategories.forEach(function(subCategory) {
+            var option = document.createElement('option');
+            option.value = subCategory;
+            option.textContent = subCategory;
+            subCategorySelect.appendChild(option);
+        });
+        subCategorySelect.disabled = false; 
+    }
+</script>
+
+{% endblock %}

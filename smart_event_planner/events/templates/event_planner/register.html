@@ -1,0 +1,31 @@
+{% extends 'event_planner/base.html' %}
+
+{% block content %}
+  <h2>Kayıt Ol</h2>
+  <form method="post">
+    {% csrf_token %}
+    
+    <label for="username">Kullanıcı Adı:</label>
+    <input type="text" id="username" name="username" value="{{ form.username.value }}" required><br>
+
+    <label for="email">E-posta:</label>
+    <input type="email" id="email" name="email" value="{{ form.email.value }}" required><br>
+
+    <label for="password">Şifre:</label>
+    <input type="password" id="password" name="password" required><br>
+
+    <label for="password_confirmation">Şifre Tekrarı:</label>
+    <input type="password" id="password_confirmation" name="password_confirmation" required><br>
+
+    <button type="submit">Kayıt Ol</button>
+  </form>
+
+  
+  {% if messages %}
+    <ul>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

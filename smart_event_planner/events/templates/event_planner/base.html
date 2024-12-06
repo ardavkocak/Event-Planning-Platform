@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akıllı Etkinlik Planlayıcı</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Akıllı Etkinlik Planlayıcı</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}">Ana Sayfa</a></li>
+                
+
+
+                
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'event_list'%}">Etkinlikler</a></li>
+                    <li><a href="{% url 'user_profile' username=user.username %}">Profilim</a></li>
+                    <li><a href="{% url 'logout' %}">Çıkış Yap</a></li>
+                    <li><a href="{% url 'event_create' %}">Etkinlik Oluştur</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Giriş Yap</a></li>
+                    <li><a href="{% url 'register' %}">Kayıt Ol</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>Tüm Hakları Saklıdır &copy; 2024</p>
+    </footer>
+</body>
+</html>

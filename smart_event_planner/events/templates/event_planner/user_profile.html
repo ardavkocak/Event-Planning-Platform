@@ -1,0 +1,28 @@
+{% extends 'event_planner/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="profile-card">
+    <div class="profile-card-header">
+        {% if user.profile_picture %}
+            <img src="{{ user.profile_picture.url }}" alt="Profil Resmi" class="profile-card-image">
+        {% else %}
+            <img src="/media/profile_pics/default_profile.png" alt="Varsayılan Profil Resmi" class="profile-card-image">
+        {% endif %}
+    </div>
+    <div class="profile-card-body">
+        <h2>{{ user.username }}</h2>
+        <p><strong>Ad:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Telefon:</strong> {{ user.phone_number|default:"Bilgi yok" }}</p>
+        <p><strong>Lokasyon:</strong> {{ user.location|default:"Bilgi yok" }}</p>
+        <p><strong>Cinsiyet:</strong> {{ user.gender|default:"Bilgi yok" }}</p>
+        <p><strong>Doğum Günü:</strong> {{ user.birth_date|date:"d/m/Y"|default:"Bilgi yok" }}</p>
+        <p><strong>İlgi Alanları:</strong> {{ user.interests|default:"Belirtilmedi" }}</p>
+        <p><strong>Puan:</strong> {{ user.score|default:"0" }}</p>
+        <p><strong>Katıldığı Etkinlik Sayısı:</strong> {{ user.participated_events_count }}</p>
+        
+        <a href="{% url 'profile_update' username=user.username %}" class="profile-card-button">Profilimi Güncelle</a>
+    </div>
+</div>
+{% endblock %}

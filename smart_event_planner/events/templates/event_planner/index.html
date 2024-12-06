@@ -1,0 +1,120 @@
+{% extends 'event_planner/base.html' %}
+
+{% block content %}
+<div class="welcome-section">
+    <h2>Hoş Geldiniz!</h2>
+    <p>Etkinliklerinizi kolayca planlayın ve yönetin.</p>
+</div>
+
+<div class="event-types-section">
+    <h3>Etkinlik Türleri</h3>
+    <div class="event-types-container">
+        <div class="event-type">
+            <h4>Sosyal</h4>
+            <div class="sub-categories">
+                <div class="sub-category">
+                    <h5>Müzik</h5>
+                    <a href="{% url 'event_list_by_category' category='Müzik' sub_category='Müzik' %}" class="btn btn-secondary">Müzik Etkinlikleri</a>
+                </div>
+                <div class="sub-category">
+                    <h5>Spor</h5>
+                    <a href="{% url 'event_list_by_category' category='Spor' sub_category='Spor' %}" class="btn btn-secondary">Spor Etkinlikleri</a>
+                </div>
+                <div class="sub-category">
+                    <h5>Diğer</h5>
+                    <a href="{% url 'event_list_by_category' category='Diğer Sosyal Etkinlikler' sub_category='Diğer Sosyal Etkinlikler' %}" class="btn btn-secondary">Diğer Sosyal Etkinlikler</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="event-type">
+            <h4>Konferans</h4>
+            <div class="sub-categories">
+                <div class="sub-category">
+                    <h5>Teknoloji</h5>
+                    <a href="{% url 'event_list_by_category' category='Teknoloji Konferansı' sub_category='Teknoloji Konferansı' %}" class="btn btn-secondary">Teknoloji Konferansları</a>
+                </div>
+                <div class="sub-category">
+                    <h5>İş Dünyası</h5>
+                    <a href="{% url 'event_list_by_category' category='İş Dünyası Konferansı' sub_category='İş Dünyası Konferansı' %}" class="btn btn-secondary">İş Dünyası Konferansları</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="event-type">
+            <h4>Workshop</h4>
+            <div class="sub-categories">
+                <div class="sub-category">
+                    <h5>Yazılım</h5>
+                    <a href="{% url 'event_list_by_category' category='Yazılım Workshopları' sub_category='Yazılım Workshopları' %}" class="btn btn-secondary">Yazılım Workshopları</a>
+                </div>
+                <div class="sub-category">
+                    <h5>Sanat</h5>
+                    <a href="{% url 'event_list_by_category' category='Sanat Workshopları' sub_category='Sanat Workshopları' %}" class="btn btn-secondary">Sanat Workshopları</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="event-type">
+            <h4>Online</h4>
+            <div class="sub-categories">
+                <div class="sub-category">
+                    <h5>Seminer</h5>
+                    <a href="{% url 'event_list_by_category' category='Online Seminerler' sub_category='Online Seminerler' %}" class="btn btn-secondary">Online Seminerler</a>
+                </div>
+                <div class="sub-category">
+                    <h5>Webinar</h5>
+                    <a href="{% url 'event_list_by_category' category='Webinar' sub_category='Webinar' %}" class="btn btn-secondary">Webinarlar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .welcome-section {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .event-types-section {
+        margin-top: 30px;
+    }
+    .event-types-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+    .event-type {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+        width: 200px;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .event-type h4 {
+        margin-bottom: 10px;
+        color: #333;
+    }
+    .sub-categories {
+        margin-top: 15px;
+    }
+    .sub-category {
+        margin-bottom: 10px;
+    }
+    .btn {
+        text-decoration: none;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 3px;
+        color: white;
+        background-color: #007bff;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}

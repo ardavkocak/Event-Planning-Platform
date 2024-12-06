@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Düzenle</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>{{ user.username }}'in Profili</h1>
+    </header>
+    <main>
+        
+        {% if form.errors %}
+            <ul>
+                {% for field in form %}
+                    {% if field.errors %}
+                        <li>{{ field.label }}: {{ field.errors }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        
+        <form action="{% url 'profile_update' user.username %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+            
+            <div class="profile-picture">
+                {% if user.profile_picture %}
+                    <img src="{{ user.profile_picture.url }}" alt="Profil Resmi" width="150" height="150">
+                {% else %}
+                    <img src="{% static 'images/default_profile.png' %}" alt="Varsayılan Profil Resmi" width="150" height="150">
+                {% endif %}
+                <label for="profile_picture">Profil Resmini Güncelle:</label>
+                <input type="file" name="profile_picture" id="profile_picture">
+            </div>
+
+            
+            <div class="profile-info">
+                <label for="username">Kullanıcı Adı:</label>
+                <input type="text" name="username" id="username" value="{{ user.username }}" readonly>
+
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" value="{{ user.email }}">
+
+                <label for="first_name">Ad:</label>
+                <input type="text" name="first_name" id="first_name" value="{{ user.first_name }}">
+
+                <label for="last_name">Soyad:</label>
+                <input type="text" name="last_name" id="last_name" value="{{ user.last_name }}">
+
+                <label for="location">Konum:</label>
+                <input type="text" name="location" id="location" value="{{ user.location }}">
+
+                <label for="interests">İlgi Alanları:</label>
+                <textarea name="interests" id="interests">{{ user.interests }}</textarea>
+
+                <label for="birth_date">Doğum Tarihi:</label>
+                <input type="date" name="birth_date" id="birth_date" value="{{ user.birth_date }}">
+
+                <label for="gender">Cinsiyet:</label>
+                <select name="gender" id="gender">
+                    <option value="Male" {% if user.gender == "Male" %}selected{% endif %}>Erkek</option>
+                    <option value="Female" {% if user.gender == "Female" %}selected{% endif %}>Kadın</option>
+                    <option value="Other" {% if user.gender == "Other" %}selected{% endif %}>Diğer</option>
+                </select>
+
+                <label for="phone_number">Telefon Numarası:</label>
+                <input type="text" name="phone_number" id="phone_number" value="{{ user.phone_number }}">
+            </div>
+
+            
+            <button type="submit">Profili Güncelle</button>
+        </form>
+
+        
+        <div class="back-to-home">
+            <a href="{% url 'index' %}" class="btn">Ana Sayfaya Dön</a>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Akıllı Etkinlik Planlayıcı. Tüm Hakları Saklıdır.</p>
+    </footer>
+</body>
+</html>

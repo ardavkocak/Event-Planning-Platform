@@ -1,0 +1,59 @@
+{% extends 'event_planner/base.html' %}
+
+{% block content %}
+<div class="admin-container">
+    <h2>Admin Paneli</h2>
+
+    
+    <section class="admin-section">
+        <h3>Kullanıcı Yönetimi</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Kullanıcı Adı</th>
+                    <th>E-posta</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            <a href="{% url 'user_edit' user.id %}">Düzenle</a> | 
+                            <a href="{% url 'user_delete' user.id %}" onclick="return confirm('Kullanıcıyı silmek istediğinize emin misiniz?');">Sil</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+
+    
+    <section class="admin-section">
+        <h3>Etkinlik Yönetimi</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Etkinlik Adı</th>
+                    <th>Tarih</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                    <tr>
+                        <td>{{ event.name }}</td>
+                        <td>{{ event.date }}</td>
+                        <td>
+                            <a href="{% url 'event_edit' event.id %}">Düzenle</a> | 
+                            <a href="{% url 'event_delete' event.id %}" onclick="return confirm('Etkinliği silmek istediğinize emin misiniz?');">Sil</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</div>
+{% endblock %}

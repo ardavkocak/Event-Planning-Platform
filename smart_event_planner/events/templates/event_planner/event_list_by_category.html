@@ -1,0 +1,20 @@
+{% extends 'event_planner/base.html' %}
+
+{% block content %}
+<h2>{{ category }} Etkinlikleri</h2>
+
+{% if events %}
+    <ul>
+        {% for event in events %}
+        <li>
+            <h3>{{ event.name }}</h3>
+            <p>{{ event.description }}</p>
+            <p>Tarih: {{ event.event_date }}</p>
+            <p>Konum: {{ event.location }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Bu kategoriye ait etkinlik bulunamadı.</p>
+{% endif %}
+{% endblock %}

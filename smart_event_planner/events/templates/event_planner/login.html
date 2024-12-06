@@ -1,0 +1,23 @@
+{% extends 'event_planner/base.html' %}
+
+{% block content %}
+  <h2>Giriş Yap</h2>
+  <form method="post" action="{% url 'login' %}"> 
+    {% csrf_token %}
+    <label for="username">Kullanıcı Adı:</label>
+    <input type="text" id="username" name="username" required><br>
+    
+    <label for="password">Şifre:</label>
+    <input type="password" id="password" name="password" required><br>
+    
+    <button type="submit">Giriş Yap</button>
+    {% comment %} <button type="submit">Şifremi Unuttum</button> {% endcomment %}
+    <a href="{% url 'password_reset' %}">Şifremi Unuttum</a> 
+
+  </form>
+  {% if messages %}
+    {% for message in messages %}
+      <p>{{ message }}</p>
+    {% endfor %}
+  {% endif %}
+{% endblock %}
